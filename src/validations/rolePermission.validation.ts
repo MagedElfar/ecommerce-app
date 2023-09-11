@@ -2,8 +2,8 @@ import Joi from "joi";
 
 const createRolePermissionSchema = Joi.object({
 
-    RoleId: Joi.number().required(),
-    PermissionId: Joi.number().required(),
+    roleId: Joi.number().required(),
+    permissionId: Joi.number().required(),
 })
 
 export {

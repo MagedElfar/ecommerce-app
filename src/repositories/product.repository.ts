@@ -32,9 +32,10 @@ export default class ProductRepository extends GenericRepository<Product, Produc
             if (!model) return null
 
             return model.dataValues
-        } catch (error) {
-            this.logger.error("database error", null, error)
+        } catch (error: any) {
+            this.logger.error("database error", null, error?.stack || error?.message || error)
             throw new InternalServerError("database error")
         }
+
     }
 }

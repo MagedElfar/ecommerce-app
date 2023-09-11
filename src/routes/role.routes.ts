@@ -11,7 +11,16 @@ const roleController: RoleController = roleDIContainer.resolve(Dependencies.Role
 
 // router.post("/", userController.createUserHandler.bind(userController))
 
-router.post("/", validation(roleValidation.createRoleSchema), roleController.createRoleHandler.bind(roleController))
+router.get(
+    "/",
+    roleController.getRolesHandler.bind(roleController)
+)
+
+router.post(
+    "/",
+    validation(roleValidation.createRoleSchema),
+    roleController.createRoleHandler.bind(roleController)
+)
 
 
 

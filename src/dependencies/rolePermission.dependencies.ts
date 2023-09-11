@@ -14,9 +14,12 @@ const rolePermissionDIContainer = new DIContainer();
 rolePermissionDIContainer.register(Dependencies.Logger, new Logger())
 
 //repository dependencies
-rolePermissionDIContainer.register(Dependencies.PermissionRepository, new PermissionRepository());
+rolePermissionDIContainer.register(
+    Dependencies.PermissionRepository,
+    new PermissionRepository()
+);
 
-rolePermissionDIContainer.register(Dependencies.RolePermissionRepository, new RoleRepository());
+rolePermissionDIContainer.register(Dependencies.RoleRepository, new RoleRepository());
 
 rolePermissionDIContainer.register(Dependencies.RolePermissionRepository, new RolePermissionRepository());
 
@@ -25,20 +28,29 @@ rolePermissionDIContainer.register<IPermissionServices>(Dependencies.PermissionS
     rolePermissionDIContainer.resolve(Dependencies.PermissionRepository)
 ));
 
-rolePermissionDIContainer.register<IRoleServices>(Dependencies.RoleServices, new RoleServices(
-    rolePermissionDIContainer.resolve(Dependencies.RoleServices)
-));
+rolePermissionDIContainer.register<IRoleServices>(
+    Dependencies.RoleServices,
+    new RoleServices(
+        rolePermissionDIContainer.resolve(Dependencies.RoleRepository)
+    )
+)
 
-rolePermissionDIContainer.register<IRolePermissionServices>(Dependencies.RolePermissionServices, new RolePermissionServices(
-    rolePermissionDIContainer.resolve(Dependencies.RolePermissionRepository),
-    rolePermissionDIContainer.resolve(Dependencies.RoleServices),
-    rolePermissionDIContainer.resolve(Dependencies.PermissionServices)
-));
+rolePermissionDIContainer.register<IRolePermissionServices>(
+    Dependencies.RolePermissionServices,
+    new RolePermissionServices(
+        rolePermissionDIContainer.resolve(Dependencies.RolePermissionRepository),
+        rolePermissionDIContainer.resolve(Dependencies.RoleServices),
+        rolePermissionDIContainer.resolve(Dependencies.PermissionServices)
+    )
+);
 
 //controllers dependencies
-rolePermissionDIContainer.register(Dependencies.RolePermissionController, new RolePermissionController(
-    rolePermissionDIContainer.resolve(Dependencies.RolePermissionServices),
-    rolePermissionDIContainer.resolve(Dependencies.Logger)
-))
+rolePermissionDIContainer.register(
+    Dependencies.RolePermissionController,
+    new RolePermissionController(
+        rolePermissionDIContainer.resolve(Dependencies.RolePermissionServices),
+        rolePermissionDIContainer.resolve(Dependencies.Logger)
+    )
+)
 
 export default rolePermissionDIContainer;

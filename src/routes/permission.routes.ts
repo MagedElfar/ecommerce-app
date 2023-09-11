@@ -7,9 +7,13 @@ import permissionDIContainer from "../dependencies/permission.dependencies";
 
 const router = Router();
 
-const permissionController: PermissionController = permissionDIContainer.resolve(Dependencies.RoleController)
+const permissionController: PermissionController = permissionDIContainer.resolve(Dependencies.PermissionController)
 
-router.post("/", validation(permissionValidation.createPermissionSchema), permissionController.createPermissionHandler.bind(permissionController))
+router.post(
+    "/",
+    validation(permissionValidation.createPermissionSchema),
+    permissionController.createPermissionHandler.bind(permissionController)
+)
 
 
 

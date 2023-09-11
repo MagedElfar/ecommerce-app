@@ -7,6 +7,11 @@ const updateSchema = Joi.object({
     email: Joi.string().email().required(),
 })
 
+const updateUserRoleSchema = Joi.object({
+    roleId: Joi.number().required(),
+})
+
 export {
-    updateSchema
+    updateSchema,
+    updateUserRoleSchema
 }

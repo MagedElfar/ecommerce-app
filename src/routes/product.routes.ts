@@ -27,10 +27,21 @@ const multerInstance = new Multer();
 const productController: ProductController = productDIContainer.resolve(Dependencies.ProductController)
 
 
-router.post("/", multerInstance.memoryUpload().single("image"), validation(productValidations.createProductSchema), productController.createProductHandler.bind(productController))
+router.post(
+    "/",
+    multerInstance.memoryUpload().single("image"),
+    validation(productValidations.createProductSchema),
+    productController.createProductHandler.bind(productController)
+)
 
-router.get("/:id", productController.getProductHandler.bind(productController));
+router.get(
+    "/:id",
+    productController.getProductHandler.bind(productController)
+);
 
-router.delete("/:id", productController.deleteProductHandler.bind(productController));
+router.delete(
+    "/:id",
+    productController.deleteProductHandler.bind(productController)
+);
 
 export default router;

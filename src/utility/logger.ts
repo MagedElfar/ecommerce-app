@@ -29,9 +29,15 @@ export class Logger implements ILogger {
             }),
             format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
             format.printf(({ timestamp, level, message, data }) => {
+                console.log
                 const endpoint = data && data.endpoint ? ` [${data.endpoint}]` : '';
-                const logData = data && data.logData ? ` ${JSON.stringify(data.logData, null, 2)}` : '';
-                return `[${timestamp}] ${level}:${endpoint} ${message}${logData}`;
+                const logData = data && data.logData ?
+                    typeof data.logData === 'object' ?
+                        JSON.stringify(data.logData, null, 2)
+                        :
+                        data.logData
+                    : '';
+                return `[${timestamp}] ${level}:${endpoint} ${message} ${logData}`;
             })
         );
 
@@ -41,7 +47,12 @@ export class Logger implements ILogger {
             format.printf(({ timestamp, level, message, data }) => {
                 const endpoint = data && data.endpoint ? ` [${data.endpoint}]` : '';
                 const method = data && data.method ? ` ${data.method}` : '';
-                const logData = data && data.logData ? ` ${JSON.stringify(data.logData, null, 2)}` : '';
+                const logData = data && data.logData ?
+                    typeof data.logData === 'object' ?
+                        JSON.stringify(data.logData, null, 2)
+                        :
+                        data.logData
+                    : '';
                 // return `[${timestamp}] ${level}:${endpoint} ${message}${logData}`;
                 return `[${timestamp}] ${level}:${endpoint}${method} ${message}${logData}`;
 
@@ -83,9 +94,11 @@ export class Logger implements ILogger {
     public error(message: string, req: Request | null = null, errorData?: any) {
         const data = req ? {
             endpoint: req.originalUrl,
-            logData: { errorData },
+            logData: errorData,
             method: req.method
-        } : { logData: { errorData } };
+        } : { logData: errorData };
+
+
         this.logger.error(message, { data });
     }
 }

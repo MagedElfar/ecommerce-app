@@ -114,10 +114,13 @@ class App {
         const logger = new Logger();
 
         process.on("uncaughtException", (err: any) => {
+
             logger.error("error ocurred", null, err)
+
             process.exit()
         })
         process.on("unhandledRejection", (err: any) => {
+
             logger.error("error ocurred", null, err)
             process.exit()
         })

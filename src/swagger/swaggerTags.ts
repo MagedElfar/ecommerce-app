@@ -6,6 +6,18 @@ const tags: Tag[] = [
         description: 'API endpoints for user authentication',
     },
     {
+        name: 'Role',
+        description: 'API endpoints for add and mange roles in system',
+    },
+    {
+        name: 'Permission',
+        description: 'API endpoints for add and mange permissions in system',
+    },
+    {
+        name: 'Role_Permission',
+        description: 'API endpoints for assign persimmon to specific',
+    },
+    {
         name: 'User',
         description: 'API endpoints for user',
     },

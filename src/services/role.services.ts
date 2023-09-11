@@ -7,6 +7,7 @@ export interface IRoleServices {
     create(createRoleDto: CreateRoleDto): Promise<RoleAttributes>;
     findById(id: number): Promise<RoleAttributes | null>
     findOne(data: Partial<RoleAttributes>): Promise<RoleAttributes | null>;
+    findMany(): Promise<RoleAttributes[]>
     // deleteOne(id: number): Promise<void>;
 }
 
@@ -60,7 +61,14 @@ export default class RoleServices implements IRoleServices {
         }
     }
 
-
+    async findMany(): Promise<RoleAttributes[]> {
+        try {
+            const roles = await this.roleRepository.findMany()
+            return roles
+        } catch (error) {
+            throw error
+        }
+    }
     // async deleteOne(id: number): Promise<void> {
     //     try {
     //         const isDeleted = await this.refreshTokenRepository.delete({ id })

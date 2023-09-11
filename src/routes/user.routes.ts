@@ -17,11 +17,28 @@ const userController: UserController = userDIContainer.resolve(Dependencies.User
 
 // router.post("/", userController.createUserHandler.bind(userController))
 
-router.get("/:id", userController.getUserByIdHandler.bind(userController))
+router.get(
+    "/:id",
+    userController.getUserByIdHandler.bind(userController)
+)
 
-router.put("/:id", validation(userValidation.updateSchema), userController.updateUserHandler.bind(userController))
+router.put(
+    "/role/:id",
+    validation(userValidation.updateUserRoleSchema),
+    permissionMiddleware("update user role"),
+    userController.updateUserRoleHandler.bind(userController)
+)
 
-router.delete("/:id", permissionMiddleware, userController.deleteUserHandler.bind(userController))
+router.put(
+    "/:id",
+    validation(userValidation.updateSchema),
+    userController.updateUserHandler.bind(userController)
+)
+
+router.delete(
+    "/:id", permissionMiddleware,
+    userController.deleteUserHandler.bind(userController)
+)
 
 
 export default router;

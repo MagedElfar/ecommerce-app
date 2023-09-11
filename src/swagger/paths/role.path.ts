@@ -1,4 +1,4 @@
-const productPath = {
+const rolePath = {
     '/roles': {
         post: {
             tags: ['Role'],
@@ -28,7 +28,7 @@ const productPath = {
                                     description: 'The name of the role have to one of(admin , vendor , customer).',
                                 }
                             },
-                            required: ['name', 'description'],
+                            required: ['name'],
                         },
                     },
                 },
@@ -43,7 +43,7 @@ const productPath = {
                                 type: 'object',
                                 properties: {
                                     type: { type: 'string' },
-                                    product: {
+                                    role: {
                                         type: 'object',
                                         properties: {
                                             id: { type: 'integer' },
@@ -60,12 +60,71 @@ const productPath = {
                 '400': {
                     description: 'Bad Request',
                 },
+                '403': {
+                    description: 'Forbidden',
+                },
                 '500': {
                     description: 'Internal Server Error',
                 }
             },
         },
+        get: {
+            tags: ['Role'],
+            summary: 'get all roles',
+            parameters: [
+                {
+                    name: 'Authorization',
+                    in: 'header',
+                    required: true,
+                    schema: {
+                        type: 'string',
+                    },
+                    description: 'Bearer token',
+                    example: 'Bearer eyJhbGciOiJIUzI1NiIsIn...',
+                },
+
+            ],
+            responses: {
+                '200': {
+                    description: 'Success',
+                    content: {
+                        'application/json': {
+                            schema: {
+                                // Response body schema definition here
+                                type: 'object',
+                                properties: {
+                                    type: { type: 'string' },
+                                    roles: {
+                                        type: 'array',
+                                        items: {
+                                            type: 'object',
+                                            properties: {
+                                                id: { type: 'integer' },
+                                                name: { type: 'string' },
+                                                createdAt: { type: 'string' },
+                                                updatedAt: { type: 'string' },
+                                            }
+
+                                        },
+                                    },
+                                },
+                            },
+                        }
+                    }
+                },
+                '400': {
+                    description: 'Bad Request',
+                },
+                '403': {
+                    description: 'Forbidden',
+                },
+                '500': {
+                    description: 'Internal Server Error',
+                }
+            },
+        },
+
     }
 }
 
-export default productPath
+export default rolePath

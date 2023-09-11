@@ -39,4 +39,29 @@ export class RoleController {
 
     }
 
+    async getRolesHandler(req: Request, res: Response, next: NextFunction) {
+
+        try {
+
+            const roles = await this.roleServices.findMany();
+
+            this.logger.info("Create a new role", req, {
+                user: {
+                    name: req.user?.name,
+                    email: req.user?.email
+                },
+
+                roles
+            })
+
+            sendResponse(res, {
+                roles
+            }, 200)
+
+        } catch (error) {
+            next(error)
+        }
+
+    }
+
 }

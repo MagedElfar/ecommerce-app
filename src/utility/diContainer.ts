@@ -1,3 +1,5 @@
+import { Logger } from "./logger";
+
 export enum Dependencies {
     Logger = "logger",
     EmailServices = "emailServices",
@@ -41,6 +43,8 @@ export default class DIContainer {
         if (this.dependencies[key]) {
             return this.dependencies[key];
         }
+
+        const logger = new Logger()
         throw new Error(`Dependency not found for key: ${key}`);
     }
 }
