@@ -6,39 +6,46 @@ import validation from "./../middlewares/validation.middleware"
 import { Dependencies } from '../utility/diContainer';
 import userDIContainer from '../dependencies/user.dependencies';
 
-const router = Router();
-
-// const userController = new UserController(
-//     new UserServices(new UserRepository()),
-//     new Logger()
-// );
+const userRouter = Router();
 
 const userController: UserController = userDIContainer.resolve(Dependencies.UserController)
 
-// router.post("/", userController.createUserHandler.bind(userController))
-
-router.get(
+userRouter.get(
     "/:id",
     userController.getUserByIdHandler.bind(userController)
 )
 
-router.put(
+userRouter.put(
     "/role/:id",
     validation(userValidation.updateUserRoleSchema),
     permissionMiddleware("update user role"),
     userController.updateUserRoleHandler.bind(userController)
 )
 
-router.put(
-    "/:id",
+userRouter.put(
+    "/",
     validation(userValidation.updateSchema),
     userController.updateUserHandler.bind(userController)
 )
 
-router.delete(
-    "/:id", permissionMiddleware,
+userRouter.put(
+    "/:id",
+    validation(userValidation.updateSchema),
+    permissionMiddleware("update user permission"),
+    userController.updateUserHandler.bind(userController)
+)
+
+userRouter.delete(
+    "/",
+    permissionMiddleware("delete user permission"),
+    userController.deleteUserHandler.bind(userController)
+)
+
+userRouter.delete(
+    "/:id",
+    permissionMiddleware("delete user permission"),
     userController.deleteUserHandler.bind(userController)
 )
 
 
-export default router;
+export default userRouter;

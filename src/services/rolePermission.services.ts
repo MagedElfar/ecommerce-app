@@ -9,8 +9,9 @@ export interface IRolePermissionServices {
     create(createRolePermissionDto: CreateRolePermissionDto): Promise<RolePermissionAttributes>;
     // findById(id: number): Promise<RoleAttributes | null>
     findOne(data: Partial<RolePermissionAttributes>): Promise<RolePermissionAttributes | null>;
-    // deleteOne(id: number): Promise<void>;
+    findMany(): Promise<any>;
 }
+
 
 export default class RolePermissionServices implements IRolePermissionServices {
 
@@ -71,43 +72,23 @@ export default class RolePermissionServices implements IRolePermissionServices {
     }
 
 
-    // async findById(id: number): Promise<RoleAttributes | null> {
-    //     try {
-    //         const role = await this.roleRepository.findById(id)
+    async findMany(): Promise<any> {
+        try {
+            const rolePermission = await this.rolePermissionRepository.findMany();
 
-    //         if (!role) return null
+            const data = rolePermission.reduce((obj: any, item: RolePermissionAttributes) => {
+                if (!obj[item.role?.name!]) {
+                    obj[item.role?.name!] = [item]
+                } else {
+                    obj[item.role?.name!] = [...obj[item.role?.name!], item]
+                }
 
-    //         return role;
-    //     } catch (error) {
-    //         throw error
-    //     }
-    // }
+                return obj
+            }, {})
 
-    // async findOne(data: Partial<RefreshTokenAttributes>): Promise<RefreshTokenAttributes | null> {
-    //     try {
-
-    //         const refreshToken = await this.refreshTokenRepository.findOne(data)
-
-    //         if (!refreshToken) return null;
-
-    //         return refreshToken
-
-    //     } catch (error) {
-    //         throw error
-    //     }
-    // }
-
-
-    // async deleteOne(id: number): Promise<void> {
-    //     try {
-    //         const isDeleted = await this.refreshTokenRepository.delete({ id })
-
-    //         if (isDeleted === 0) throw new NotFoundError("record not exist")
-
-    //         return;
-    //     } catch (error) {
-    //         throw error
-    //     }
-    // }
-
+            return data;
+        } catch (error) {
+            throw error
+        }
+    }
 }

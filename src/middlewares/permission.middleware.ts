@@ -7,6 +7,7 @@ import { Dependencies } from "../utility/diContainer";
 import { Logger } from '../utility/logger';
 import { IRolePermissionServices } from '../services/rolePermission.services';
 import rolePermissionDIContainer from '../dependencies/rolePermission.dependencies';
+import { Roles } from '../models/role.model';
 
 
 export default function permissionMiddleware(permissionName: string) {
@@ -54,5 +55,17 @@ export default function permissionMiddleware(permissionName: string) {
 
         next()
     }
+
+}
+
+export function permissionUserMiddleware(req: Request, res: Response, next: NextFunction) {
+    const user = req.user as User; // Cast req.user to User type
+
+    if (req.user?.role?.name === Roles.ADMIN) return next()
+
+    const { id } = req.params;
+
+
+    if (+id !== req.user?.id) return next(new ForbiddenError("Forbidden"))
 
 }

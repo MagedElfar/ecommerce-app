@@ -3,7 +3,7 @@ import { MakeNullishOptional } from "sequelize/types/utils";
 import { ILogger, Logger } from "../utility/logger";
 import { InternalServerError } from "../utility/errors";
 
-interface FindManyOptions<T extends Model> {
+export interface FindManyOptions<T extends Model> {
     where?: WhereOptions<Attributes<T>>;
     order?: Order;
     offset?: number;

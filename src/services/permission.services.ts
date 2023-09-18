@@ -7,6 +7,7 @@ export interface IPermissionServices {
     create(createPermissionDto: CreatePermissionDto): Promise<PermissionAttributes>;
     findById(id: number): Promise<PermissionAttributes | null>
     findOne(data: Partial<PermissionAttributes>): Promise<PermissionAttributes | null>;
+    findMany(): Promise<PermissionAttributes[]>
 }
 
 export default class PermissionServices implements IPermissionServices {
@@ -54,6 +55,15 @@ export default class PermissionServices implements IPermissionServices {
 
             return permission
 
+        } catch (error) {
+            throw error
+        }
+    }
+
+    async findMany(): Promise<PermissionAttributes[]> {
+        try {
+            const permissions = await this.permissionRepository.findMany()
+            return permissions
         } catch (error) {
             throw error
         }

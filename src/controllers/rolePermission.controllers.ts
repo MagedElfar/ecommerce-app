@@ -40,4 +40,20 @@ export class RolePermissionController {
 
     }
 
+    async getAllRolePermissionHandler(req: Request, res: Response, next: NextFunction) {
+
+        try {
+
+            const rolePermission = await this.rolePermissionServices.findMany();
+
+            sendResponse(res, {
+                rolePermission
+            }, 200)
+
+        } catch (error) {
+            next(error)
+        }
+
+    }
+
 }

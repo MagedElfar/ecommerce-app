@@ -39,4 +39,27 @@ export class PermissionController {
 
     }
 
+    async getPermissionsHandler(req: Request, res: Response, next: NextFunction) {
+
+        try {
+
+            const Permissions = await this.permissionServices.findMany();
+
+            this.logger.info("Get all permissions", req, {
+                user: {
+                    name: req.user?.name,
+                    email: req.user?.email
+                },
+            })
+
+            sendResponse(res, {
+                Permissions
+            }, 200)
+
+        } catch (error) {
+            next(error)
+        }
+
+    }
+
 }

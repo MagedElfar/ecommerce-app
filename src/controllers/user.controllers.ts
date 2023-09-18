@@ -57,7 +57,11 @@ export class UserController {
 
         try {
 
-            const user = await this.userServices.updateUser(+req.params.id!, req.body)
+            const { id } = req.params
+
+            const userId = id || req.user?.id!
+
+            const user = await this.userServices.updateUser(+userId, req.body)
 
             sendResponse(res, {
                 user
@@ -106,11 +110,14 @@ export class UserController {
 
             const { id } = req.params
 
+            const userId = id || req.user?.id!
+
+
             const user = await this.userServices.findUserById(+id);
 
             if (!user) throw new NotFoundError("user note exist")
 
-            const isDeleted = await this.userServices.deleteUser(+id);
+            const isDeleted = await this.userServices.deleteUser(+userId);
 
             if (!isDeleted) throw new NotFoundError("user note exist");
 

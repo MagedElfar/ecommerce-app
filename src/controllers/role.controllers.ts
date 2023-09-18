@@ -45,13 +45,11 @@ export class RoleController {
 
             const roles = await this.roleServices.findMany();
 
-            this.logger.info("Create a new role", req, {
+            this.logger.info("Get all roles", req, {
                 user: {
                     name: req.user?.name,
                     email: req.user?.email
                 },
-
-                roles
             })
 
             sendResponse(res, {
