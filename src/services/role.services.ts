@@ -7,7 +7,7 @@ export interface IRoleServices {
     create(createRoleDto: CreateRoleDto): Promise<RoleAttributes>;
     findById(id: number): Promise<RoleAttributes | null>
     findOne(data: Partial<RoleAttributes>): Promise<RoleAttributes | null>;
-    findMany(): Promise<RoleAttributes[]>
+    findMany(): Promise<{ data: RoleAttributes[], count: number }>
     // deleteOne(id: number): Promise<void>;
 }
 
@@ -61,7 +61,7 @@ export default class RoleServices implements IRoleServices {
         }
     }
 
-    async findMany(): Promise<RoleAttributes[]> {
+    async findMany(): Promise<{ data: RoleAttributes[], count: number }> {
         try {
             const roles = await this.roleRepository.findMany()
             return roles

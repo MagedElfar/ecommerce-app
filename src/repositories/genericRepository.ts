@@ -62,7 +62,7 @@ export default abstract class GenericRepository<T extends Model, I> {
 
     // ... other methods ...
 
-    public async findMany(options: FindManyOptions<T> = {}): Promise<I[]> {
+    public async findMany(options: FindManyOptions<T> = {}): Promise<{ count: number, data: I[] }> {
         try {
             const queryOptions: FindOptions = {};
 
@@ -84,7 +84,13 @@ export default abstract class GenericRepository<T extends Model, I> {
 
             const models = await this.model.findAll(queryOptions);
 
-            return models.map((model) => model.dataValues);
+            const count = await this.model.count({
+                where: queryOptions.where,
+            });
+
+            const data = models.map((model) => model.dataValues);
+
+            return { count, data }
         } catch (error: any) {
             this.logger.error("database error", null, error);
             throw new InternalServerError("database error");

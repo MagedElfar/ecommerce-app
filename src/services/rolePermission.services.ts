@@ -9,7 +9,7 @@ export interface IRolePermissionServices {
     create(createRolePermissionDto: CreateRolePermissionDto): Promise<RolePermissionAttributes>;
     // findById(id: number): Promise<RoleAttributes | null>
     findOne(data: Partial<RolePermissionAttributes>): Promise<RolePermissionAttributes | null>;
-    findMany(): Promise<any>;
+    findMany(): Promise<{ count: number, data: RolePermissionAttributes }>;
     remove(id: number): Promise<number>
 }
 
@@ -73,11 +73,11 @@ export default class RolePermissionServices implements IRolePermissionServices {
     }
 
 
-    async findMany(): Promise<any> {
+    async findMany(): Promise<{ count: number, data: RolePermissionAttributes }> {
         try {
             const rolePermission = await this.rolePermissionRepository.findMany();
 
-            const data = rolePermission.reduce((obj: any, item: RolePermissionAttributes) => {
+            const data = rolePermission.data.reduce((obj: any, item: RolePermissionAttributes) => {
                 if (!obj[item.role?.name!]) {
                     obj[item.role?.name!] = [item]
                 } else {
@@ -87,7 +87,7 @@ export default class RolePermissionServices implements IRolePermissionServices {
                 return obj
             }, {})
 
-            return data;
+            return { data, count: rolePermission.count };
         } catch (error) {
             throw error
         }

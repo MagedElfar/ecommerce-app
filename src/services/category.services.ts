@@ -7,7 +7,10 @@ import { CategoryAttributes } from '../models/category.model';
 export interface ICategoryServices {
     create(createCategoryDto: CreateCategoryDto): Promise<CategoryAttributes>;
     findOne(data: Partial<CategoryAttributes>): Promise<CategoryAttributes | null>;
-    findMany(getCategoryDTO: GetCategoryDTO): Promise<CategoryAttributes[]>
+    findMany(getCategoryDTO: GetCategoryDTO): Promise<{
+        count: number,
+        data: CategoryAttributes[]
+    }>
 }
 
 export default class CategoryServices implements ICategoryServices {
@@ -60,7 +63,10 @@ export default class CategoryServices implements ICategoryServices {
         }
     }
 
-    async findMany(getCategoryDTO: GetCategoryDTO): Promise<CategoryAttributes[]> {
+    async findMany(getCategoryDTO: GetCategoryDTO): Promise<{
+        count: number,
+        data: CategoryAttributes[]
+    }> {
         try {
             const categories = await this.categoryRepository.findMany({
                 ...getCategoryDTO,

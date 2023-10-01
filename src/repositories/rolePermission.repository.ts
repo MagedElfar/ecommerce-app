@@ -12,7 +12,10 @@ export default class RolePermissionRepository extends GenericRepository<RolePerm
         super(RolePermission)
     }
 
-    public async findMany(options: FindManyOptions<RolePermission> = {}): Promise<RolePermissionAttributes[]> {
+    public async findMany(options: FindManyOptions<RolePermission> = {}): Promise<{
+        data: RolePermissionAttributes[],
+        count: number
+    }> {
         try {
             const queryOptions: FindOptions = {};
 
@@ -48,8 +51,14 @@ export default class RolePermissionRepository extends GenericRepository<RolePerm
                 ]
             });
 
+            const count = await this.model.count({
+                where: queryOptions.where,
+            });
 
-            return models.map((model) => model.dataValues);
+            const data = models.map((model) => model.dataValues);
+
+            return { data, count }
+
         } catch (error: any) {
             this.logger.error("database error", null, error);
             throw new InternalServerError("database error");

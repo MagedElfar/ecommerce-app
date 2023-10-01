@@ -9,7 +9,9 @@ export default class CategoryRepository extends GenericRepository<Category, Cate
         super(Category)
     }
 
-    public async findMany(options: FindManyOptions<Category> = {}): Promise<CategoryAttributes[]> {
+    public async findMany(options: FindManyOptions<Category> = {}): Promise<{
+        count: number, data: CategoryAttributes[]
+    }> {
         try {
             const queryOptions: FindOptions = {};
 
@@ -33,8 +35,15 @@ export default class CategoryRepository extends GenericRepository<Category, Cate
                 ...queryOptions,
             });
 
+            const count = await this.model.count({
+                where: queryOptions.where,
+            });
 
-            return models.map((model) => model.dataValues);
+            const data = models.map((model) => model.dataValues);
+
+            return {
+                data, count
+            }
         } catch (error: any) {
             this.logger.error("database error", null, error);
             throw new InternalServerError("database error");
