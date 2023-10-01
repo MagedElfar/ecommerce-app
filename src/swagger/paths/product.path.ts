@@ -33,10 +33,14 @@ const productPath = {
                                 },
                                 description: {
                                     type: 'string',
-                                    description: 'The description of the user.',
+                                    description: 'The description of the product.',
                                 },
+                                price: {
+                                    type: 'number',
+                                    description: 'The price of the product.',
+                                }
                             },
-                            required: ['name', 'description'],
+                            required: ['name', 'description', "price"],
                         },
                     },
                 },

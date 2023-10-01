@@ -10,6 +10,7 @@ export interface IRolePermissionServices {
     // findById(id: number): Promise<RoleAttributes | null>
     findOne(data: Partial<RolePermissionAttributes>): Promise<RolePermissionAttributes | null>;
     findMany(): Promise<any>;
+    remove(id: number): Promise<number>
 }
 
 
@@ -87,6 +88,16 @@ export default class RolePermissionServices implements IRolePermissionServices {
             }, {})
 
             return data;
+        } catch (error) {
+            throw error
+        }
+    }
+
+    async remove(id: number): Promise<number> {
+        try {
+            const isDeleted = await this.rolePermissionRepository.delete(id);
+
+            return isDeleted
         } catch (error) {
             throw error
         }

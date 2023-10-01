@@ -23,6 +23,12 @@ router.post(
     rolePermissionController.createRolePermissionHandler.bind(rolePermissionController)
 )
 
+router.delete(
+    "/:id",
+    permissionMiddleware("remove permission"),
+    rolePermissionController.removePermissionHandler.bind(rolePermissionController)
+)
+
 
 
 export default router;  

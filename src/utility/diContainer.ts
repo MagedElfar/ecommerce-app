@@ -25,7 +25,10 @@ export enum Dependencies {
     PermissionController = "permissionController",
     RolePermissionRepository = "rolePermissionRepository",
     RolePermissionServices = "rolePermissionServices",
-    RolePermissionController = "rolePermissionController"
+    RolePermissionController = "rolePermissionController",
+    CategoryRepository = "categoryRepository",
+    CategoryServices = "categoryServices",
+    CategoryController = "categoryController"
 }
 
 // diContainer.js

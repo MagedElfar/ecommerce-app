@@ -165,6 +165,66 @@ const rolePermissionPath = {
             },
         },
 
+    },
+    '/role_permission/{id}': {
+        delete: {
+            tags: ['Role_Permission'],
+            summary: 'unassign permission from a specific role',
+            parameters: [
+                {
+                    in: 'path',
+                    name: 'id',
+                    required: true,
+                    description: 'ID of assigned permission',
+                    schema: {
+                        type: 'integer',
+                    },
+                },
+                {
+                    name: 'Authorization',
+                    in: 'header',
+                    required: true,
+                    schema: {
+                        type: 'string',
+                    },
+                    description: 'Bearer token',
+                    example: 'Bearer eyJhbGciOiJIUzI1NiIsIn...',
+                },
+
+            ],
+
+            responses: {
+                '200': {
+                    description: 'Success',
+                    content: {
+                        'application/json': {
+                            schema: {
+                                // Response body schema definition here
+                                type: 'object',
+                                properties: {
+                                    type: { type: 'string' },
+                                },
+                            },
+                        }
+                    }
+                },
+                '400': {
+                    description: 'Bad Request',
+                },
+                '401': {
+                    description: "Unauthorized"
+                },
+                '403': {
+                    description: "Forbidden"
+                },
+                '404': {
+                    description: "Not found"
+                },
+                '500': {
+                    description: 'Internal Server Error',
+                }
+            },
+        },
     }
 }
 

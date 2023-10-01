@@ -1,10 +1,12 @@
-import { Attributes, UpdateOptions, Model, ModelStatic, WhereAttributeHashValue, WhereOptions, FindOptions, Order } from "sequelize";
+import { Attributes, UpdateOptions, Model, ModelStatic, WhereAttributeHashValue, WhereOptions, FindOptions, Order, Op } from "sequelize";
 import { MakeNullishOptional } from "sequelize/types/utils";
 import { ILogger, Logger } from "../utility/logger";
 import { InternalServerError } from "../utility/errors";
 
 export interface FindManyOptions<T extends Model> {
-    where?: WhereOptions<Attributes<T>>;
+    where?: WhereOptions<Attributes<T>> & {
+        [Op.like]?: string
+    };
     order?: Order;
     offset?: number;
     limit?: number;

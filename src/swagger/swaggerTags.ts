@@ -15,11 +15,15 @@ const tags: Tag[] = [
     },
     {
         name: 'Role_Permission',
-        description: 'API endpoints for assign persimmon to specific',
+        description: 'API endpoints for assign persimmon to specific role',
     },
     {
         name: 'User',
         description: 'API endpoints for user',
+    },
+    {
+        name: 'Category',
+        description: 'API endpoints for Category',
     },
     {
         name: 'Product',

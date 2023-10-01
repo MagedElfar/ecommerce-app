@@ -1,6 +1,8 @@
 ## Description
 
-It is a basic model for simple user rest-api system include "Authentication & Authorization" using node js and MySQL database.
+It is a basic e-commerce system build with Node.js, Express.js & MySQL.
+
+using sequelize as ORM.
 
 API documentation using swagger:
 

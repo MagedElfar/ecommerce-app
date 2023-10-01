@@ -1,12 +1,12 @@
 import { Model, DataTypes, Optional } from "sequelize";
 import DatabaseConfig from "./../db";
 import User from "./user.model";
-import { ProductMediaAttributes } from "./productMedia.model";
 
 export interface ProductAttributes {
     id: number;
     name: string;
     description: string;
+    price: number;
     userId: number;
     user?: UserAttributes;
     media?: ProductAttributes[];
@@ -22,6 +22,7 @@ class Product extends Model<ProductAttributes, ProductCreationAttributes> implem
     public description!: string;
     public name!: string;
     public userId!: number;
+    public price!: number;
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
 }
@@ -44,7 +45,9 @@ Product.init(
             type: DataTypes.INTEGER.UNSIGNED,
             allowNull: false,
         },
-
+        price: {
+            type: DataTypes.DECIMAL
+        }
     },
     {
         sequelize: DatabaseConfig.sequelize,

@@ -8,6 +8,7 @@ import ProductMedia from "../models/productMedia.model";
 import Role from "../models/role.model";
 import Permission from "../models/permission.model";
 import RolePermission from "../models/rolePermission.model";
+import Category from "../models/category.model";
 
 // Get the existing indexes for the model from the database
 async function getExistingIndexes(queryInterface: QueryInterface, tableName: string): Promise<any> {
@@ -76,5 +77,6 @@ migration([
     RefreshToken,
     Role,
     Permission,
-    RolePermission
+    RolePermission,
+    Category
 ])
