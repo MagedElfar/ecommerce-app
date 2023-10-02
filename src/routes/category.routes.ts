@@ -14,7 +14,7 @@ const categoryController: CategoryController = categoryDIContainer.resolve(
 
 categoryRouter.get(
     "/",
-    validation(categoryValidation.getCategoriesSchema),
+    validation(categoryValidation.getCategoriesSchema, "query"),
     categoryController.getCategoriesHandler.bind(categoryController)
 )
 
@@ -23,6 +23,13 @@ categoryRouter.post(
     validation(categoryValidation.createCategorySchema),
     permissionMiddleware("add a new category"),
     categoryController.createCategoryHandler.bind(categoryController)
+)
+
+categoryRouter.put(
+    "/:id",
+    validation(categoryValidation.createCategorySchema),
+    permissionMiddleware("update category"),
+    categoryController.updateCategoryHandler.bind(categoryController)
 )
 
 

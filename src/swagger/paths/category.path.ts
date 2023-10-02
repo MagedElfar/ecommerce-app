@@ -34,7 +34,7 @@ const categoryPath = {
                 },
             },
             responses: {
-                '201': {
+                '200': {
                     description: 'Success',
                     content: {
                         'application/json': {
@@ -70,9 +70,36 @@ const categoryPath = {
         },
 
         get: {
-            tags: ['Permission'],
-            summary: 'get all permission',
+            tags: ['Category'],
+            summary: 'get all categories',
             parameters: [
+                {
+                    in: 'query',
+                    name: 'name',
+                    required: false,
+                    description: 'category name',
+                    schema: {
+                        type: 'string',
+                    },
+                },
+                {
+                    in: 'query',
+                    name: 'limit',
+                    required: false,
+                    description: 'number of recorded fetched ber request "required of offset provided"',
+                    schema: {
+                        type: 'string',
+                    },
+                },
+                {
+                    in: 'query',
+                    name: 'offset',
+                    required: false,
+                    description: 'number of recorded will skip "refer to page"',
+                    schema: {
+                        type: 'string',
+                    },
+                },
                 {
                     name: 'Authorization',
                     in: 'header',
@@ -95,19 +122,26 @@ const categoryPath = {
                                 type: 'object',
                                 properties: {
                                     type: { type: 'string' },
-                                    Permissions: {
-                                        type: 'array',
-                                        items: {
-                                            type: 'object',
-                                            properties: {
-                                                id: { type: 'integer' },
-                                                name: { type: 'string' },
-                                                createdAt: { type: 'string' },
-                                                updatedAt: { type: 'string' },
-                                            }
+                                    categories: {
+                                        type: 'object',
+                                        properties: {
+                                            count: { type: 'number' },
+                                            data: {
+                                                type: 'array',
+                                                items: {
+                                                    type: 'object',
+                                                    properties: {
+                                                        id: { type: 'integer' },
+                                                        name: { type: 'string' },
+                                                        createdAt: { type: 'string' },
+                                                        updatedAt: { type: 'string' },
+                                                    }
 
-                                        },
-                                    },
+                                                },
+                                            },
+                                        }
+                                    }
+
                                 },
                             },
                         }
