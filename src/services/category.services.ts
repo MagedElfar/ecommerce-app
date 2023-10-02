@@ -100,7 +100,7 @@ export default class CategoryServices implements ICategoryServices {
 
     async delete(id: number): Promise<void> {
         try {
-            const isDeleted = await this.categoryRepository.delete(id)
+            const isDeleted = await this.categoryRepository.delete({ id })
 
             if (!isDeleted) throw new BadRequestError("record not found");
 

@@ -9,6 +9,7 @@ import Role from "../models/role.model";
 import Permission from "../models/permission.model";
 import RolePermission from "../models/rolePermission.model";
 import Category from "../models/category.model";
+import ProductCategory from "../models/productCategory.model";
 
 // Get the existing indexes for the model from the database
 async function getExistingIndexes(queryInterface: QueryInterface, tableName: string): Promise<any> {
@@ -78,5 +79,6 @@ migration([
     Role,
     Permission,
     RolePermission,
-    Category
+    Category,
+    ProductCategory
 ])

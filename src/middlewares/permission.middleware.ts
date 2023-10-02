@@ -27,7 +27,7 @@ export default function permissionMiddleware(permissionName: string) {
                     name: user.name,
                     email: user.email
                 },
-                error: "permission doesn't exist"
+                error: `permission "${permissionName}" doesn't exist`
             })
             return next(new ForbiddenError("Forbidden"))
         }
@@ -40,12 +40,12 @@ export default function permissionMiddleware(permissionName: string) {
         });
 
         if (!rolePermission) {
-            logger.error(`permission error "${permissionName}"`, req, {
+            logger.error(`permission error '${permissionName}'`, req, {
                 user: {
                     name: user.name,
                     email: user.email
                 },
-                error: "user doesn't have permission"
+                error: `user doesn't have permission to '${permissionName}'`
             })
             return next(new ForbiddenError("Forbidden"))
         }

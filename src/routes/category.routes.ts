@@ -32,6 +32,13 @@ categoryRouter.put(
     categoryController.updateCategoryHandler.bind(categoryController)
 )
 
+categoryRouter.delete(
+    "/:id",
+    permissionMiddleware("delete category"),
+    categoryController.deleteCategoryHandler.bind(categoryController)
+)
+
+
 
 
 export default categoryRouter; 
