@@ -1,7 +1,8 @@
 import GenericRepository, { FindManyOptions } from "./genericRepository";
 import Category, { CategoryAttributes } from "../models/category.model";
-import { FindOptions } from "sequelize";
+import { FindOptions, literal } from "sequelize";
 import { InternalServerError } from "../utility/errors";
+import ProductCategory from "../models/productCategory.model";
 
 export default class CategoryRepository extends GenericRepository<Category, CategoryAttributes> {
 
@@ -33,11 +34,17 @@ export default class CategoryRepository extends GenericRepository<Category, Cate
 
             const models = await this.model.findAll({
                 ...queryOptions,
+                attributes: [
+                    "id",
+                    "name",
+                    [literal("(SELECT COUNT(*) FROM product_category WHERE product_category.categoryId = Category.id)"), "products"]
+                ],
             });
 
             const count = await this.model.count({
                 where: queryOptions.where,
             });
+
 
             const data = models.map((model) => model.dataValues);
 

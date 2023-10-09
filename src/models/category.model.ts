@@ -1,10 +1,12 @@
 // src/models/User.ts
 import { Model, DataTypes, Optional } from "sequelize";
 import DatabaseConfig from "../db";
+import ProductCategory from "./productCategory.model";
 
 export interface CategoryAttributes {
     id: number;
     name: string;
+    products?: number
 }
 
 interface CategoryCreationAttributes extends Optional<CategoryAttributes, "id"> { }
@@ -14,6 +16,7 @@ class Category extends Model<CategoryAttributes, CategoryCreationAttributes> imp
     public name!: string;
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
+    products?: number
 }
 
 Category.init(
@@ -36,6 +39,7 @@ Category.init(
         updatedAt: "updatedAt", // Customize the name of the updatedAt field
     }
 );
+
 
 
 export default Category;

@@ -49,4 +49,5 @@ ProductCategory.init(
 ProductCategory.belongsTo(Product, { as: "product", foreignKey: "productId", onDelete: "CASCADE" })
 ProductCategory.belongsTo(Category, { as: "category", foreignKey: "categoryId", onDelete: "CASCADE" })
 
+
 export default ProductCategory;
