@@ -10,6 +10,8 @@ import Permission from "../models/permission.model";
 import RolePermission from "../models/rolePermission.model";
 import Category from "../models/category.model";
 import ProductCategory from "../models/productCategory.model";
+import ProductAttributes from "../models/productAttributes.model";
+import { InternalServerError } from "../utility/errors";
 
 // Get the existing indexes for the model from the database
 async function getExistingIndexes(queryInterface: QueryInterface, tableName: string): Promise<any> {
@@ -58,16 +60,19 @@ async function migration(models: ModelStatic<any>[]) {
                 await removeIndexes(queryInterface, table)
                 await model.sync({ alter: true });
                 console.log(`${table} table created successfully!`)
-            } catch (error) {
+            } catch (error: any) {
                 console.error(`Error creating table : ${table} with error : ${error}`);
+                throw new InternalServerError(error)
             }
 
         }))
 
         console.log("All table created successfully!")
 
-    } catch (error) {
+    } catch (error: any) {
         console.error(error);
+        throw new InternalServerError(error)
+
     }
 }
 
@@ -80,5 +85,6 @@ migration([
     Permission,
     RolePermission,
     Category,
-    ProductCategory
+    ProductCategory,
+    ProductAttributes
 ])

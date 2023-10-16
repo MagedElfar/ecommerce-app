@@ -8,6 +8,8 @@ export default function (schema: Joi.ObjectSchema, type = "body") {
 
     return (req: Request, res: Response, next: NextFunction) => {
 
+        console.log(req.body)
+
         switch (type) {
             case "query":
                 reqType = req.query;

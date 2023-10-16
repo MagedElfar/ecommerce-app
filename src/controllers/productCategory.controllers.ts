@@ -30,33 +30,19 @@ export default class ProductCategoryController {
 
     }
 
-    // async deleteCategoryHandler(req: Request, res: Response, next: NextFunction) {
+    async unassignCategoryHandler(req: Request, res: Response, next: NextFunction) {
 
-    //     try {
+        try {
 
-    //         const { id } = req.params
+            const { id } = req.params
 
-    //         const category = await this.categoryServices.findOne({ id: +id });
+            const data = await this.productCategoryServices.delete(req.user?.id!, +id!);
 
-    //         if (!category) throw new NotFoundError("category not exist");
+            sendResponse(res, {}, 200)
 
-    //         await this.categoryServices.delete(+id)
+        } catch (error) {
+            next(error)
+        }
 
-    //         this.logger.info("delete category", req, {
-    //             user: {
-    //                 name: req.user?.name,
-    //                 email: req.user?.email,
-    //                 role: req.user?.role?.name
-    //             },
-
-    //             category
-    //         })
-
-    //         sendResponse(res, {}, 200)
-
-    //     } catch (error) {
-    //         next(error)
-    //     }
-
-    // }
+    }
 }

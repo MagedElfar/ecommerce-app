@@ -8,18 +8,6 @@ import authDIContainer from '../dependencies/auth.dependencies';
 
 const router = Router();
 
-
-// const authController = new AuthController(
-//     new AuthServices(
-//         new UserServices(new UserRepository()),
-//         new JwtServices(),
-//         new RefreshTokenServices(new RefreshTokenRepository(), new JwtServices()),
-//         new NodeMailerServices(),
-//         new Logger()
-//     ),
-//     new Logger()
-// );
-
 const authController: AuthController = authDIContainer.resolve(Dependencies.AuthController);
 
 

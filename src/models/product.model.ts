@@ -1,15 +1,19 @@
 import { Model, DataTypes, Optional } from "sequelize";
 import DatabaseConfig from "./../db";
 import User from "./user.model";
+import { ProductMediaAttributes } from "./productMedia.model";
 
 export interface ProductAttributes {
     id: number;
     name: string;
     description: string;
+    sku: string;
     price: number;
     userId: number;
     user?: UserAttributes;
-    media?: ProductAttributes[];
+    parentId?: number
+    parent?: ProductAttributes
+    media?: ProductMediaAttributes[];
     createdAt?: Date;
     updatedAt?: Date;
 
@@ -22,6 +26,8 @@ class Product extends Model<ProductAttributes, ProductCreationAttributes> implem
     public description!: string;
     public name!: string;
     public userId!: number;
+    public parentId: number;
+    public sku: string;
     public price!: number;
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
@@ -41,9 +47,17 @@ Product.init(
         description: {
             type: DataTypes.STRING,
         },
+        sku: {
+            type: DataTypes.STRING,
+            unique: true
+        },
         userId: {
             type: DataTypes.INTEGER.UNSIGNED,
             allowNull: false,
+        },
+        parentId: {
+            type: DataTypes.INTEGER.UNSIGNED,
+            allowNull: true,
         },
         price: {
             type: DataTypes.DECIMAL
@@ -58,8 +72,11 @@ Product.init(
     }
 );
 
-Product.belongsTo(User, { as: "user", foreignKey: "userId", onDelete: "CASCADE" })
+Product.belongsTo(User, { as: "user", foreignKey: "userId", onDelete: "CASCADE" });
+Product.belongsTo(Product, { as: "parent", foreignKey: "parentId", onDelete: "CASCADE" })
+
 User.hasMany(Product, { as: "products", foreignKey: "userId" })
+Product.hasMany(Product, { as: "products", foreignKey: "parentId" })
 
 
 export default Product; 

@@ -17,6 +17,11 @@ productCategoryRouter.post(
     productCategoryController.assignCategoryHandler.bind(productCategoryController)
 )
 
+productCategoryRouter.delete(
+    "/:id",
+    productCategoryController.unassignCategoryHandler.bind(productCategoryController)
+)
+
 
 
 

@@ -6,6 +6,7 @@ import rolePath from "./role.path"
 import permissionPath from "./permission.path"
 import rolePermissionPath from "./rolePermission.path"
 import categoryPath from "./category.path"
+import productCategoryPath from "./productCategory.path"
 
 const paths: Paths = {
     ...authPath,
@@ -14,7 +15,8 @@ const paths: Paths = {
     ...permissionPath,
     ...productPath,
     ...rolePermissionPath,
-    ...categoryPath
+    ...categoryPath,
+    ...productCategoryPath
 }
 
 export default paths

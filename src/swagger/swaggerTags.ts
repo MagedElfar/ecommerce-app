@@ -35,7 +35,13 @@ const tags: Tag[] = [
         name: 'Product',
         description: 'API endpoints for product',
         defaultCollapsed: true
-    }
+    },
+    {
+        name: 'Product_Category',
+        description: 'API used for assign or unassign category to specific product',
+        defaultCollapsed: true
+    },
+
 ]
 
 export default tags 

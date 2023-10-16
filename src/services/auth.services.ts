@@ -112,7 +112,10 @@ export default class AuthServices implements IAuthServices {
 
             const tokenData = this.jwtServices.verifyToken(refreshToken.token);
 
-            if (!tokenData) throw new AuthorizationError("Authentication failed. Token is invalid or expired.");
+            if (!tokenData) {
+                await this.refreshTokenServices.deleteOne(refreshToken.id)
+                throw new AuthorizationError("Authentication failed. Token is invalid or expired.");
+            }
 
             const accessToken: string = this.jwtServices.createToken({ id: tokenData.id }, config.jwt.expire)
 

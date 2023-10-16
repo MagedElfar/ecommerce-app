@@ -31,7 +31,10 @@ export enum Dependencies {
     CategoryController = "categoryController",
     ProductCategoryRepository = "productCategoryRepository",
     ProductCategoryServices = "productCategoryServices",
-    ProductCategoryController = "productCategoryController"
+    ProductCategoryController = "productCategoryController",
+    ProductAttributeRepository = "productAttributeRepository",
+    ProductAttributeServices = "productAttributeServices",
+    ProductAttributeController = "productAttributeController",
 }
 
 // diContainer.js

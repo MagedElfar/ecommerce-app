@@ -26,7 +26,7 @@ export function errorHandler(err: Error, req: Request, res: Response, next: Next
 
     // const error = requestErrorFormat(err)
 
-    console.log(err)
+    // console.log(err)
 
 
     if (err instanceof AppError) {
@@ -34,7 +34,7 @@ export function errorHandler(err: Error, req: Request, res: Response, next: Next
         res.status(err.status).json({
             type: err.type,
             message: err.message,
-            error: err.error
+            errors: Array.isArray(err.error) ? err.error : [err.error]
         });
 
         logger.error(err.message, req, {
@@ -50,7 +50,7 @@ export function errorHandler(err: Error, req: Request, res: Response, next: Next
         res.status(500).json({
             type: "Error",
             message: 'Internal Server Error',
-            error: err.message
+            errors: [err.message]
         });
 
         logger.error("Internal Server Error", req, {

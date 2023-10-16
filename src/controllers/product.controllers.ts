@@ -3,17 +3,23 @@ import { sendResponse } from "../utility/responseHelpers";
 import { IProductServices } from "../services/product.services";
 import { NotFoundError } from "../utility/errors";
 import { IProductMediaServices } from "../services/productMedia.services";
+import { IProductAttributeServices } from "../services/productAttributes.services";
+import { CreateAttributeDto } from "../dto/productAttributes.dto";
+import { ProductAttributes } from "../models/product.model";
 
 export class ProductController {
 
-    private productServices: IProductServices;
+    private readonly productServices: IProductServices;
+    private readonly productAttributeServices: IProductAttributeServices;
     private readonly productMediaServices: IProductMediaServices;
 
     constructor(
         productServices: IProductServices,
-        productMediaServices: IProductMediaServices
+        productAttributeServices: IProductAttributeServices,
+        productMediaServices: IProductMediaServices,
     ) {
         this.productServices = productServices;
+        this.productAttributeServices = productAttributeServices;
         this.productMediaServices = productMediaServices
     }
 
@@ -22,14 +28,22 @@ export class ProductController {
 
         try {
 
-            let product;
+            const { attributes = [], ...others } = req.body
+            let product: ProductAttributes | null;
 
             product = await this.productServices.create({
-                ...req.body,
+                ...others,
                 userId: req.user?.id
-            })
+            });
 
             await this.productMediaServices.create(req, product.id, true);
+
+            await Promise.all(attributes.map(async (attr: CreateAttributeDto) => {
+                await this.productAttributeServices.create({
+                    ...attr,
+                    productId: product!.id
+                })
+            }))
 
             product = await this.productServices.findById(product.id)
 

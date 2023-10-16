@@ -34,7 +34,7 @@ const categoryPath = {
                 },
             },
             responses: {
-                '200': {
+                '201': {
                     description: 'Success',
                     content: {
                         'application/json': {
@@ -113,7 +113,7 @@ const categoryPath = {
 
             ],
             responses: {
-                '201': {
+                '200': {
                     description: 'Success',
                     content: {
                         'application/json': {
@@ -133,6 +133,7 @@ const categoryPath = {
                                                     properties: {
                                                         id: { type: 'integer' },
                                                         name: { type: 'string' },
+                                                        products: { type: 'integer' },
                                                         createdAt: { type: 'string' },
                                                         updatedAt: { type: 'string' },
                                                     }
